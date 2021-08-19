@@ -3,6 +3,7 @@
 import sqlite3
 
 from char.playerCharacter import PlayerCharacter
+from char.playerCharacter import PlayerCharacter_list
 from char.nonPlayerCharacter import NonPlayerCharacter
 
 #--------------------------------------
@@ -18,18 +19,19 @@ def load_characters():
 	con = sqlite3.connect('data/pymerp.db')
 
 	for r in con.execute("select * from characters"):
-		if r[1] is not '1': # player faction hardcoded to 1
+		if r[1] != '1': # player faction hardcoded to 1
 			c = NonPlayerCharacter(r[0], r[1], r[2], r[3], r[4], r[5], r[6])
 			npcList.append(c)
 		else:
 			c = PlayerCharacter(r[0], r[1], r[2], r[3], r[4], r[5], r[6])
-			pcList.append(c)
+			pcList.clist.append(c)
 
 	con.close()
 
 #-------------------------------------
 # global variables
-pcList = []
+
+pcList = PlayerCharacter_list(0)
 npcList = []
 
 load_characters()

@@ -35,15 +35,15 @@ class Room:
 			self.y1 <= other.y2 and self.y2 >= other.y1 
 
 #-------------------------------------
-def spawn_character(character, room: Room, dungeon: tile.Map) -> None:
+def spawn_character(character, room: Room) -> None:
 	spawned = False
 
 	while not spawned:
 		x = random.randint(room.x1 + 1, room.x2 - 1)
 		y = random.randint(room.y1 + 1, room.y2 - 1)
 
-		if not any(npc.x == x and npc.y == y for npc in dungeon.npcs):
-			if not any(pc.x == x and pc.y == y for pc in dungeon.pcs):
+		if not any(npc.x == x and npc.y == y for npc in chargen.npcList):
+			if not any(pc.x == x and pc.y == y for pc in chargen.pcList.clist):
 				character.spawn(x, y)
 				spawned = True
 
@@ -68,8 +68,6 @@ def tunnel_between(start: Tuple[int, int], end: Tuple[int, int]) -> Iterator[Tup
 # Generate a new dungeon map
 def create_map(width: int, height: int) -> tile.Map:
 	dungeon = tile.Map(width, height)
-	dungeon.npcs = chargen.npcList
-	dungeon.pcs = chargen.pcList
 
 	room_max_size = 18
 	room_min_size = 6
@@ -97,14 +95,14 @@ def create_map(width: int, height: int) -> tile.Map:
 
 		rooms.append(new_room) # append the new room to the list
 	
-	for c in dungeon.npcs:
+	for c in chargen.npcList:
 		if c.x==0 or c.y==0: 
 			r = random.randrange(0, len(rooms))
-			spawn_character(c, rooms[r], dungeon)
+			spawn_character(c, rooms[r])
 
-	for c in dungeon.pcs:
+	for c in chargen.pcList.clist:
 		if c.x==0 or c.y==0: 
 			r = random.randrange(0, len(rooms))
-			spawn_character(c, rooms[r], dungeon)
+			spawn_character(c, rooms[r])
 
 	return dungeon

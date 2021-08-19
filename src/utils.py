@@ -11,11 +11,11 @@ class rect:
 		self.h = h
 
 #-------------------------------------
-# gameState: 
-#	- 1: pc's turn
-#	- 2: npc's turn
-gameState = int(1)
+# global system pause
+paused = True
 
+#-------------------------------------
+# ui boundaries
 screen = rect(0, 0, 100, 50)
 map_ui = rect(0, 0, 80, 40)
 mess_ui = rect(0, 40, 80, 10)

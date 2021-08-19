@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 #-------------------------------------
 import tcod
+
 import tile
+import char.chargen as chargen
 from char.character import Character
 
 #-------------------------------------
@@ -23,10 +25,10 @@ movement = label(y=6)
 #-------------------------------------
 def select_entity(x: int, y: int, game_map: tile.Map) -> None:
 	if game_map.in_bounds(x, y) and game_map.visible[x, y]:
-		for pc in game_map.pcs:
+		for pc in chargen.pcList.clist:
 			if pc.x == x and pc.y == y:
 				set_labels(pc)
-		for npc in game_map.npcs:
+		for npc in chargen.npcList:
 			if npc.x == x and npc.y == y:
 				set_labels(npc)
 
