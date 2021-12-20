@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 #-------------------------------------
 # imports
+import time
 import numpy
+
 import tcod
+
 import utils
 import char.chargen as chargen
 import procgen
@@ -27,9 +30,8 @@ def render(context: tcod.context, console: tcod.Console):
                 default=tile.SHROUD )
 
     for i, pc in enumerate(chargen.pcList.clist):
-        console.print(x=pc.dest_x, y=pc.dest_y, string='*', fg=pc.color)
-
         if i == chargen.pcList.hilited:
+            console.print(x=pc.dest_x, y=pc.dest_y, string='*', fg=pc.color)
             console.print(x=pc.x, y=pc.y, string=pc.faction, fg=pc.color, bg=utils.lime)
         else:
             console.print(x=pc.x, y=pc.y, string=pc.faction, fg=pc.color)
@@ -40,7 +42,9 @@ def render(context: tcod.context, console: tcod.Console):
 
     messages.render\
         (console, x=utils.mess_ui.x, y=utils.mess_ui.y, w=utils.mess_ui.w, h=utils.mess_ui.h)
-    ui.render_info(console)
+
+    ui.render_CharInfo(console)
+    ui.set_gameLabels(console)
 
     context.present(console) # update the screen
     console.clear()
@@ -69,7 +73,7 @@ def handle_events(context: tcod.context):
 
                 if game_map.in_bounds(event.tile.x, event.tile.y):
                     chargen.pcList.clist[chargen.pcList.hilited]\
-                        .set_dest(event.tile.x, event.tile.y, game_map)
+                        .set_dest(event.tile.x, event.tile.y)
 
         if event.type == "MOUSEMOTION":
             context.convert_event(event)
@@ -81,12 +85,13 @@ def handle_events(context: tcod.context):
 #-------------------------------------
 def update_game(context: tcod.context, root_console: tcod.Console):
     for pc in chargen.pcList.clist:
-        pc.move()
+        if pc.dest is True:
+            pc.move(game_map)
         render(context, root_console)
-
-    for npc in chargen.npcList:
-        npc.perform_action(game_map, messages)
-        render(context, root_console)
+ 
+    # for npc in chargen.npcList:
+        # npc.perform_action(game_map, messages)
+        # render(context, root_console)
 
 #-------------------------------------
 def update_fov():
@@ -112,6 +117,8 @@ def main() -> None:
         messages.add_message("welcome to merp rogue-like (mrl)", utils.welcome_text)
 
         while True: # game loop
+            utils.start_time = time.perf_counter()
+
             handle_events(context)
 
             if utils.paused is False:
@@ -119,6 +126,9 @@ def main() -> None:
 
             update_fov() 
             render(context, root_console)
+
+            utils.end_time = time.perf_counter()
+            utils.delta_time = 1 // (utils.end_time - utils.start_time)
 
 #-------------------------------------
 if __name__ == "__main__":

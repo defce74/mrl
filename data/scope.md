@@ -20,6 +20,7 @@
 ## features
 
 * 2d: without dedicated gfx artist or programmer this is a necessary constraint as gfx is not a priority
+	* possibility of using 3d for a 2d world - would require a dedicated gfx programmer
 * single player: online multiplayer deemed out of scope
 * character based - player controls multiple characters - rpg style
 * open world - procedurally generated - focus on simulation
@@ -46,9 +47,16 @@
 	* tcod - has useful pathfinding and field of view alogorithms
 	* wasabi2d - barebones but acceptable graphical capabilities
 	* pyglet - more sophisticated graphics/games library
+	* panda3d - 3d with c++ backend
 * c++: fast, but has pointers, memory management required, somewhat painful intergration
 	* SDL2: industry standard library with everything needed for a 2d game
 	* SFML: swiss army knife 2d games library 
 * rust: fast, safe, but not OO - learning curve to use ECS
 	* bracket-lib - excellent set of rogue-like tools
 	* tetra - 2d game engine library
+* java: JIT compiler similar speeds to c#
+	* syntax very similar to c++, but without pointers 
+	* easy cross platform intergration (desktop, mobile)
+	* multiple options for game engines/libraries: 
+		* libGDX: 2d and 3d framework - code based
+		* JMonkey: 3d engine - code based

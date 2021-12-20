@@ -15,11 +15,18 @@ class rect:
 paused = True
 
 #-------------------------------------
+# time variables
+start_time = 0
+end_time = 0
+delta_time = 0
+
+#-------------------------------------
 # ui boundaries
 screen = rect(0, 0, 100, 50)
 map_ui = rect(0, 0, 80, 40)
 mess_ui = rect(0, 40, 80, 10)
-info_ui = rect(80, 0, 20, 50)
+char_ui = rect(80, 0, 20, 25)
+game_ui = rect(80, 25, 20, 25)
 
 #-------------------------------------
 # color constants

@@ -49,5 +49,3 @@ class NonPlayerCharacter(Character):
 				messages.add_message\
 					(f"npc {self.name} is moving towards {target.name} {shortestDist:3.2f}", \
 						utils.orange)
-		else:
-			messages.add_message(f"npc {self.name} is waiting", utils.lime)
