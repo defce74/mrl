@@ -1,4 +1,4 @@
 # mrl
-pyhton roguelike rpg (wip)
+merp-roguelike: python rpg (work in progress)
 
 
